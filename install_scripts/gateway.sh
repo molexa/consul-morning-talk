@@ -36,10 +36,6 @@ template {
 }
 EOF
 
-###
-echo "IMPORT AIO CERT TO /etc/haproxy/aio.pem"
-###
-
 cat <<EOF > /etc/haproxy/haproxy.cfg.template
 {{\$groupedServices := services | byTag}}
 {{\$pub := \$groupedServices.http}}
@@ -54,7 +50,6 @@ defaults
 
 frontend external_services
   bind *:80
-  bind *:443 ssl crt /etc/haproxy/aio.pem
   use_backend external_services_cluster
 
 backend external_services_cluster

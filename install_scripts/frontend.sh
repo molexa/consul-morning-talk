@@ -25,7 +25,16 @@ cat <<EOF > /etc/consul.d/frontend.json
         "name": "frontend",
         "port": 80,
         "checks": [{"http": "http://localhost:80", "interval": "5s"}],
-        "tags": ["http","frontend","fe_team"]
+        "tags": ["http","frontend","fe_team"],
+        "connect": {"sidecar_service": {
+                "proxy": {
+                        "upstreams": [{
+                         "destination_name":"backend",
+                         "local_bind_port":5000
+                        }]
+                }
+        }
+        }
 }
 }
 EOF

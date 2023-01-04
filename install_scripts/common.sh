@@ -25,6 +25,7 @@ server = false
 bind_addr = "0.0.0.0"
 client_addr = "0.0.0.0"
 retry_join = ["10.0.0.5"]
+ports {grpc = 8502}
 EOF
 
 service consul restart
