@@ -55,8 +55,9 @@ frontend external_services
 backend external_services_cluster
 {{- range \$pub}}
 {{- range service .Name}}
-{{- if .Name|contains "frontend"}}
+{{- if .Name|contains "frontend"}}{{if .Name|contains "-sidecar-proxy"|not}}
  server {{.Node}}-{{.Address}} {{.Address}}:{{.Port}}
+{{- end}}
 {{- end}}
 {{- end}}
 {{- end}}
