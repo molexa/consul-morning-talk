@@ -1,0 +1,22 @@
+ssh -L 8500:10.0.0.5:8500 ubuntu@gateway.olexa.dev
+Public gateway: 20.126.5.123
+
+#### Úvod
+- představit se, v mallu
+- říct o morning talk a kurzu
+
+#### Service discovery
+- 3 usecasy - graficky pohled, scraping, komunikace po dns (balancing)
+- ukazat servicu a nody
+- zapnout frontend, zkusit vypinat
+- popsat tagy a healthchecky
+- ukazat catalog pres api
+curl 10.0.0.5:8500/v1/catalog/nodes | jq .
+- ukazat catalog pres cmd
+consul catalog nodes
+- ukazat dnsko
+dig consul.service.consul @10.0.0.5 -p 8600
+- ukazat trik s dnsmasq
+- ukazat health a dnsko
+
+#### KV

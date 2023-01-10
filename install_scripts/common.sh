@@ -1,5 +1,7 @@
+! grep swap /etc/fstab && dd if=/dev/zero of=/swap.bin bs=1M count=1024 && mkswap /swap.bin && echo "/swap.bin none swap defaults 0 0" >> /etc/fstab && swapon -a
+
 apt update
-apt -y install dnsmasq net-tools
+apt -y install dnsmasq net-tools jq
 
 cat <<EOF > /etc/dnsmasq.d/10-consul
 server=/consul/127.0.0.1#8600
@@ -30,4 +32,3 @@ EOF
 
 service consul restart
 systemctl enable consul
-

@@ -1,4 +1,4 @@
-apt -y install nginx php-fpm
+apt -y install nginx php-fpm mariadb-client
 rm -f /etc/nginx/sites-enabled/default
 rm -f /etc/nginx/sites-available/default
 
@@ -79,10 +79,16 @@ EOF
 cat <<EOF > /var/www/index.php.template
 <?php
 echo gethostname();
-echo '<br>BANNER: {{ key "/frontend/banner" }}<br>';
-echo 'DISCOUNT: {{ key "/frontend/discount" }}';
+echo '<br>EXPERIMENTAL_API: {{ key "/frontend/experimental_api" }}<br>';
+echo 'BONUS_SETS: {{ key "/frontend/bonus_sets" }}';
 ?>
 EOF
 
 systemctl restart consul-template
 systemctl enable  consul-template 
+
+cp /home/ubuntu/envoy-1.24 /usr/bin/envoy
+consul connect envoy -sidecar-for frontend &
+
+###TESTS
+mysql --host 127.0.0.1 --user mysql --port 5000 -e "show variables where variable_name = 'wsrep_node_name'"
